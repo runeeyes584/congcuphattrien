@@ -111,6 +111,7 @@ const deleteModal = document.getElementById('deleteModal');
 const storyForm = document.getElementById('storyForm');
 
 const btnAddStory = document.getElementById('btnAddStory');
+const btnExportCSV = document.getElementById('btnExportCSV');
 const modalClose = document.getElementById('modalClose');
 const btnCancel = document.getElementById('btnCancel');
 const deleteModalClose = document.getElementById('deleteModalClose');
@@ -154,6 +155,9 @@ function setupEventListeners() {
     modalClose.addEventListener('click', closeStoryModal);
     btnCancel.addEventListener('click', closeStoryModal);
     storyForm.addEventListener('submit', handleFormSubmit);
+
+    // Export CSV
+    btnExportCSV.addEventListener('click', exportToCSV);
 
     // Delete Modal
     deleteModalClose.addEventListener('click', closeDeleteModal);
@@ -418,6 +422,44 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.classList.remove('active');
     }, 3000);
+}
+
+// ===== Export CSV =====
+function exportToCSV() {
+    if (filteredStories.length === 0) {
+        showToast('Không có dữ liệu để xuất!', 'error');
+        return;
+    }
+
+    const headers = ['ID', 'Tên truyện', 'Tác giả', 'Thể loại', 'Trạng thái', 'Số chương', 'Đánh giá', 'Mô tả'];
+
+    const csvContent = [
+        headers.join(','),
+        ...filteredStories.map(story => [
+            story.id,
+            `"${story.name.replace(/"/g, '""')}"`,
+            `"${story.author.replace(/"/g, '""')}"`,
+            genreMap[story.genre] || story.genre,
+            statusMap[story.status].text,
+            story.chapters,
+            story.rating,
+            `"${(story.description || '').replace(/"/g, '""')}"`
+        ].join(','))
+    ].join('\n');
+
+    const BOM = '\uFEFF';
+    const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', `danh-sach-truyen-${new Date().toISOString().slice(0, 10)}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    showToast(`Đã xuất ${filteredStories.length} truyện ra file CSV!`, 'success');
 }
 
 // ===== Utility Functions =====

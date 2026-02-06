@@ -99,6 +99,12 @@ body {
     background-clip: text;
 }
 
+.header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
 /* ===== Buttons ===== */
 .btn {
     display: inline-flex;
