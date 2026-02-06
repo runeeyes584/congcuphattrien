@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Trang Đọc — Sample Story</title>
+  <!-- Fonts: Merriweather for body, Inter for UI -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="reader.css">
+</head>
+<body>
+  <div class="reader-root" id="root">
+    <h1 class="page-title">Story Reader</h1>
+    <header class="reader-header">
+      <div class="meta">
+        <div id="storyTitle" class="story-title">Story Title</div>
+        <div id="chapterTitle" class="chapter-title">Chương</div>
+      </div>
+      <div class="controls">
+        <button id="tocBtn" class="muted" aria-label="Mục lục">📚</button>
+        <button id="prevBtn" aria-label="Chương trước">◀</button>
+        <button id="nextBtn" aria-label="Chương sau">▶</button>
+        <div class="sep"></div>
+        <button id="decreaseFS" class="ghost" aria-label="Giảm cỡ chữ">A-</button>
+        <button id="increaseFS" class="ghost" aria-label="Tăng cỡ chữ">A+</button>
+        <button id="bookmarkBtn" class="muted" aria-label="Bookmark chương">☆</button>
+        <button id="settingsBtn" class="muted" aria-label="Cài đặt">⚙</button>
+        <label class="theme-toggle">
+          <input type="checkbox" id="themeSwitch" />
+          <span>Dark</span>
+        </label>
+      </div>
+    </header>
+
+    <!-- progress bar -->
+    <div id="progressWrap" class="progress-wrap" aria-hidden="true"><div id="progressBar" class="progress-bar"></div></div>
+
+    <main class="content-area" id="contentArea" tabindex="0" role="article" aria-live="polite"></main>
+
+    <!-- TOC modal -->
+    <div id="tocModal" class="toc-modal" aria-hidden="true">
+      <div class="toc-panel">
+        <div class="toc-head">
+          <strong>Mục lục</strong>
+          <button id="closeToc">✖</button>
+        </div>
+        <ul id="tocList" class="toc-list"></ul>
+      </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div id="settingsModal" class="settings-modal" aria-hidden="true">
+      <div class="settings-panel">
+        <div class="settings-head">
+          <strong>Cài đặt đọc</strong>
+          <button id="closeSettings">✖</button>
+        </div>
+        <div class="settings-row">
+          <label for="fontSelect">Font chữ</label>
+          <select id="fontSelect">
+            <option value="serif">Serif (Merriweather)</option>
+            <option value="sans">Sans (Inter)</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <label for="lineSpacing">Khoảng dòng</label>
+          <select id="lineSpacing">
+            <option value="1.6">Nhỏ</option>
+            <option value="1.95" selected>Tiêu chuẩn</option>
+            <option value="2.3">Rộng</option>
+          </select>
+        </div>
+        <div class="settings-row actions">
+          <button id="resetPrefs" class="ghost">Khôi phục mặc định</button>
+        </div>
+        <hr />
+        <div class="settings-row">
+          <strong>Bookmarks</strong>
+        </div>
+        <ul id="bookmarkList" class="bookmark-list"></ul>
+      </div>
+    </div>
+
+    <nav class="reader-footer">
+      <div class="nav-left">
+        <button id="prevBtnBottom">Chương trước</button>
+      </div>
+      <div class="nav-center" id="progressText">1 / 1</div>
+      <div class="nav-right">
+        <button id="nextBtnBottom">Chương sau</button>
+      </div>
+    </nav>
+  </div>
+
+  <script src="reader.js"></script>
+</body>
+</html>
