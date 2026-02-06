@@ -6,82 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Trang Chủ - Đọc Truyện Tranh</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background: #f4f4f4;
-			margin: 0;
-			padding: 0;
-		}
-		header {
-			background: #222;
-			color: #fff;
-			padding: 20px 0;
-			text-align: center;
-		}
-		.search-bar {
-			display: flex;
-			justify-content: center;
-			margin: 20px 0;
-		}
-		.search-bar input[type="text"] {
-			width: 300px;
-			padding: 10px;
-			border: 1px solid #ccc;
-			border-radius: 4px 0 0 4px;
-			outline: none;
-		}
-		.search-bar button {
-			padding: 10px 20px;
-			border: none;
-			background: #222;
-			color: #fff;
-			border-radius: 0 4px 4px 0;
-			cursor: pointer;
-		}
-		.comics-list {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-			gap: 20px;
-			max-width: 1000px;
-			margin: 0 auto;
-			padding: 20px;
-		}
-		.comic-card {
-			background: #fff;
-			border-radius: 8px;
-			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-			overflow: hidden;
-			transition: transform 0.2s;
-		}
-		.comic-card:hover {
-			transform: translateY(-5px) scale(1.03);
-		}
-		.comic-card img {
-			width: 100%;
-			height: 250px;
-			object-fit: cover;
-		}
-		.comic-card .info {
-			padding: 15px;
-		}
-		.comic-card .info h3 {
-			margin: 0 0 10px 0;
-			font-size: 1.1em;
-		}
-		.comic-card .info p {
-			margin: 0;
-			color: #666;
-			font-size: 0.95em;
-		}
-		footer {
-			background: #222;
-			color: #fff;
-			text-align: center;
-			padding: 15px 0;
-			margin-top: 40px;
-		}
-	</style>
+	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 	<header>
@@ -130,19 +55,6 @@
 	<footer>
 		&copy; 2026 Đọc Truyện Tranh Online. All rights reserved.
 	</footer>
-	<script>
-		function searchComic() {
-			var input = document.getElementById('searchInput').value.toLowerCase();
-			var cards = document.querySelectorAll('.comic-card');
-			cards.forEach(function(card) {
-				var title = card.querySelector('h3').innerText.toLowerCase();
-				if (title.includes(input)) {
-					card.style.display = '';
-				} else {
-					card.style.display = 'none';
-				}
-			});
-		}
-	</script>
+	<script src="assets/js/main.js"></script>
 </body>
 </html>
