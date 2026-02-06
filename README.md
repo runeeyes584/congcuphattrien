@@ -13,6 +13,14 @@ Tính năng:
 - Chuyển nền sáng / tối (toggle). Tùy chọn lưu vào `localStorage`.
 - Phím tắt: ← → (chuyển chương), +/- (cỡ chữ), `t` (đổi theme).
 
+Nâng cấp giao diện (mới):
+- Giao diện "dark book" mặc định, font serif dễ đọc.
+- Thanh tiến trình đọc (progress bar) cập nhật khi cuộn.
+- Bảng `Cài đặt đọc`: chọn `Font chữ` (Serif / Sans) và `Khoảng dòng`.
+- Mục lục (TOC) dạng modal, highlight chương hiện tại.
+- Lưu tuỳ chọn người dùng (chủ đề, font, line spacing, chương hiện tại) vào `localStorage`.
+
+
 Chạy (tương tự web UI trước):
 
 ```bash
