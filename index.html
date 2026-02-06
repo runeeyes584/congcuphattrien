@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Truyện - CRUD</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">📚</span>
+                    <h1>Quản Lý Truyện</h1>
+                </div>
+                <button class="btn btn-primary" id="btnAddStory">
+                    <span class="btn-icon">+</span>
+                    Thêm Truyện
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search and Filter Section -->
+            <section class="filter-section">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm truyện theo tên..." class="search-input">
+                </div>
+                <div class="filter-group">
+                    <select id="filterGenre" class="filter-select">
+                        <option value="">Tất cả thể loại</option>
+                        <option value="action">Hành động</option>
+                        <option value="romance">Tình cảm</option>
+                        <option value="comedy">Hài hước</option>
+                        <option value="horror">Kinh dị</option>
+                        <option value="fantasy">Giả tưởng</option>
+                        <option value="drama">Drama</option>
+                    </select>
+                    <select id="filterStatus" class="filter-select">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="ongoing">Đang tiến hành</option>
+                        <option value="completed">Hoàn thành</option>
+                        <option value="hiatus">Tạm dừng</option>
+                    </select>
+                    <select id="sortBy" class="filter-select">
+                        <option value="newest">Mới nhất</option>
+                        <option value="oldest">Cũ nhất</option>
+                        <option value="name-asc">Tên A-Z</option>
+                        <option value="name-desc">Tên Z-A</option>
+                        <option value="rating">Đánh giá cao</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <span class="stat-icon">📖</span>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalStories">0</span>
+                        <span class="stat-label">Tổng truyện</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">✅</span>
+                    <div class="stat-info">
+                        <span class="stat-number" id="completedStories">0</span>
+                        <span class="stat-label">Hoàn thành</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🔄</span>
+                    <div class="stat-info">
+                        <span class="stat-number" id="ongoingStories">0</span>
+                        <span class="stat-label">Đang tiến hành</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🔎</span>
+                    <div class="stat-info">
+                        <span class="stat-number" id="filteredCount">0</span>
+                        <span class="stat-label">Kết quả tìm kiếm</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stories Table -->
+            <section class="table-section">
+                <div class="table-container">
+                    <table class="stories-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Ảnh bìa</th>
+                                <th>Tên truyện</th>
+                                <th>Tác giả</th>
+                                <th>Thể loại</th>
+                                <th>Số chương</th>
+                                <th>Trạng thái</th>
+                                <th>Đánh giá</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="storiesTableBody">
+                            <!-- Stories will be rendered here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <span class="empty-icon">📭</span>
+                    <h3>Không tìm thấy truyện nào</h3>
+                    <p>Thử thay đổi bộ lọc hoặc thêm truyện mới</p>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be rendered here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Modal Add/Edit Story -->
+        <div class="modal-overlay" id="storyModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Thêm Truyện Mới</h2>
+                    <button class="modal-close" id="modalClose">&times;</button>
+                </div>
+                <form id="storyForm" class="modal-body">
+                    <input type="hidden" id="storyId">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="storyName">Tên truyện <span class="required">*</span></label>
+                            <input type="text" id="storyName" required placeholder="Nhập tên truyện">
+                        </div>
+                        <div class="form-group">
+                            <label for="storyAuthor">Tác giả <span class="required">*</span></label>
+                            <input type="text" id="storyAuthor" required placeholder="Nhập tên tác giả">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="storyGenre">Thể loại <span class="required">*</span></label>
+                            <select id="storyGenre" required>
+                                <option value="">Chọn thể loại</option>
+                                <option value="action">Hành động</option>
+                                <option value="romance">Tình cảm</option>
+                                <option value="comedy">Hài hước</option>
+                                <option value="horror">Kinh dị</option>
+                                <option value="fantasy">Giả tưởng</option>
+                                <option value="drama">Drama</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="storyStatus">Trạng thái <span class="required">*</span></label>
+                            <select id="storyStatus" required>
+                                <option value="">Chọn trạng thái</option>
+                                <option value="ongoing">Đang tiến hành</option>
+                                <option value="completed">Hoàn thành</option>
+                                <option value="hiatus">Tạm dừng</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="storyChapters">Số chương</label>
+                            <input type="number" id="storyChapters" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="storyRating">Đánh giá (1-5)</label>
+                            <input type="number" id="storyRating" placeholder="5" min="1" max="5" step="0.1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="storyCover">URL ảnh bìa</label>
+                        <input type="url" id="storyCover" placeholder="https://example.com/image.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="storyDescription">Mô tả</label>
+                        <textarea id="storyDescription" rows="4" placeholder="Nhập mô tả truyện..."></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="btnCancel">Hủy</button>
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu truyện</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal Confirm Delete -->
+        <div class="modal-overlay" id="deleteModal">
+            <div class="modal modal-small">
+                <div class="modal-header">
+                    <h2>Xác nhận xóa</h2>
+                    <button class="modal-close" id="deleteModalClose">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p class="delete-message">Bạn có chắc chắn muốn xóa truyện "<span id="deleteStoryName"></span>"?</p>
+                    <p class="delete-warning">⚠️ Hành động này không thể hoàn tác!</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="btnCancelDelete">Hủy</button>
+                    <button class="btn btn-danger" id="btnConfirmDelete">Xóa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast">
+            <span class="toast-icon" id="toastIcon">✓</span>
+            <span class="toast-message" id="toastMessage"></span>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
