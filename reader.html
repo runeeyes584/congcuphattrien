@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Trang Đọc — Sample Story</title>
+  <link rel="stylesheet" href="reader.css">
+</head>
+<body>
+  <div class="reader-root" id="root">
+    <h1 class="page-title">Story Reader</h1>
+    <header class="reader-header">
+      <div class="meta">
+        <div id="storyTitle" class="story-title">Story Title</div>
+        <div id="chapterTitle" class="chapter-title">Chương</div>
+      </div>
+      <div class="controls">
+        <button id="tocBtn" class="muted">📚 Mục lục</button>
+        <button id="prevBtn">◀</button>
+        <button id="nextBtn">▶</button>
+        <div class="sep"></div>
+        <button id="decreaseFS" class="ghost">A-</button>
+        <button id="increaseFS" class="ghost">A+</button>
+        <label class="theme-toggle">
+          <input type="checkbox" id="themeSwitch" />
+          <span>Dark</span>
+        </label>
+      </div>
+    </header>
+
+    <main class="content-area" id="contentArea" tabindex="0"></main>
+
+    <!-- TOC modal -->
+    <div id="tocModal" class="toc-modal" aria-hidden="true">
+      <div class="toc-panel">
+        <div class="toc-head">
+          <strong>Mục lục</strong>
+          <button id="closeToc">✖</button>
+        </div>
+        <ul id="tocList" class="toc-list"></ul>
+      </div>
+    </div>
+
+    <nav class="reader-footer">
+      <div class="nav-left">
+        <button id="prevBtnBottom">Chương trước</button>
+      </div>
+      <div class="nav-center" id="progressText">1 / 1</div>
+      <div class="nav-right">
+        <button id="nextBtnBottom">Chương sau</button>
+      </div>
+    </nav>
+  </div>
+
+  <script src="reader.js"></script>
+</body>
+</html>
